@@ -1,14 +1,15 @@
-﻿##########################################################
-#		Updates a SharePoint list from a CSV File#
-#		Version: 1.0				 #
-#		Created: 19/01/2015			 #
-#		Creator: Nostalgiac			 #
-#							 #
-#	Updates the SharePoint column 'Primary Program'
-	based on the 'company column in the CSV File. It will
-	only update if
-	
-#########################################################
+﻿#################################################################
+#		Updates a SharePoint list from a CSV File	#
+#		Version: 1.0				 	#
+#		Created: 19/01/2015			 	#
+#		Creator: Nostalgiac			 	#
+#							 	#
+#	Updates the SharePoint column 'Primary Program'		#
+#	based on the 'company' column in the CSV File. It will  #
+#	only update if a list item matching either 'Titlex' or  #
+#	'Employee' exists for that accountName.			#
+#								#	
+#################################################################
 
 $host.Runspace.ThreadOptions = "ReuseThread"
 
