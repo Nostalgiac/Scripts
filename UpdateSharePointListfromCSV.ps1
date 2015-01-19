@@ -3,37 +3,37 @@
 #		Version: 1.0				 #
 #		Created: 19/01/2015			 #
 #		Creator: Nostalgiac			 #
+#							 #
+#	Updates the SharePoint column 'Primary Program'
+	based on the 'company column in the CSV File. It will
+	only update if
+	
 #########################################################
 
-#Add SharePoint Module if not already loaded
-if ( (Get-PSSnapin -Name Microsoft.SharePoint.PowerShell -ErrorAction SilentlyContinue) -eq $null ) 
-{ 
-   Add-PsSnapin Microsoft.SharePoint.PowerShell 
-} 
 $host.Runspace.ThreadOptions = "ReuseThread"
 
+#Add SharePoint Module
+Add-PsSnapIn Microsoft.SharePoint.PowerShell -ErrorAction SilentlyContinue 
+
 #Connect to the SharePoint List 
-$SPServer="http://sharepoint"
-$SPAppList="/Lists/Phonebook/" 
-$spWeb = Get-SPWeb $SPServer 
-$spData = $spWeb.GetList($SPAppList)
+$spServer="http://sharepoint"
+$spAppList="/Lists/Phonebook/" 
+$spWeb = Get-SPWeb $spServer 
+$spData = $spWeb.GetList($spAppList)
 
 #Get Data from Inventory CSV File
-$InvFile="C:\Scripts\AD-Export.csv"
-$FileExists = (Test-Path $InvFile -PathType Leaf) 
-if ($FileExists) {
-	"Loading $InvFile ..." 
-	$tblData = Import-CSV $InvFile 
+$csvFile="C:\Scripts\AD-Export.csv"
+If (Test-Path $csvFile){
+	"Loading $csvFile ..." 
+	$tblData = Import-CSV $csvFile 
 	} else { 
-	"$InvFile not found! Abort!" 
+	"$csvFile does not exist." 
 	exit
 }
 
-#Loop through the CSV and upload them to SharePoint
-#Only updates existing fields in SharePoint List
-"Updating SharePoint List"
-foreach ($row in $tblData) 
-{
+#Loop through the CSV and update the SharePoint List
+"Updating SharePoint List..."
+foreach ($row in $tblData){
 	$accountName = $row."givenName".ToString() + " "  + $row."sn".ToString()
 	$item = $spData.Items.Add()
 	$item = $spData.Items | where {($_['Employee'].substring(5) -like $accountName) -or ($_['Titlex'] -like $accountName)}
