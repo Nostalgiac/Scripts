@@ -1,8 +1,8 @@
-﻿#########################################################
+﻿##########################################################
 #		Updates a SharePoint list from a CSV File#
-#		Version: 1.0				#
-#		Created: 19/01/2015			#
-#		Creator: Nostalgiac			#
+#		Version: 1.0				 #
+#		Created: 19/01/2015			 #
+#		Creator: Nostalgiac			 #
 #########################################################
 
 #Add SharePoint Module if not already loaded
