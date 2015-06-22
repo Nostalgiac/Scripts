@@ -6,6 +6,8 @@
 Get-Mailbox -Server  "EXCHANGE" | Search-Mailbox -SearchQuery 'from:sender@domain.com.au' -targetmailbox "Discovery Search Mailbox" -targetfolder "Inbox" -logonly -loglevel full
 Get-Mailbox -Server  "EXCHANGE" | Search-Mailbox -SearchQuery 'from:sender@domain.com.au' -deletecontent
 
+#Hide all disabled users from GAL
+Get-Mailbox -OrganizationalUnit "Disabled Users" | Set-Mailbox -HiddenFromAddressListsEnabled $true
 
 #########################
 #		SharePoint		#
