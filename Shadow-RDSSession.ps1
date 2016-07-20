@@ -1,9 +1,9 @@
 #######################################################
-#		Shadow RDS Sessions		                            #    
-#		Version: 1.00			          		          			  #
-#		Created: 20/07/2016				                			  #
-#		Last Updated: 20/07/2016		              			  #
-#		Creator: Nostalgiac							                  #
+#   Shadow RDS Sessions                               #    
+#   Version: 1.00                                     #
+#   Created: 20/07/2016                               #
+#   Last Updated: 20/07/2016                          #
+#   Creator: Nostalgiac                               #
 #                                                     #
 #   Required:                                         #
 #   Replace 'DomainController' and 'ConnectionBroker' #
