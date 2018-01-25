@@ -1,4 +1,4 @@
-﻿#######################################################
+########################################################
 #   Get Failed/In Progress SCCM Deployments           #    
 #   Version: 1.00                                     #
 #   Created: 24/01/2018                               #
@@ -6,9 +6,9 @@
 #   Creator: Nostalgiac                               #
 #                                                     #
 #   Required:                                         #
-#   Import-Module points to correct location		  #
-#   $SiteCode                						  #
-#	$CMServerName points to Primary Site Server       #
+#   Import-Module points to correct location	      #
+#   $SiteCode                		              #
+#   $CMServerName points to Primary Site Server       #
 #######################################################
 
 #Import ConfigurationManager Module
@@ -91,6 +91,8 @@ foreach($dp in $DistributionPoints){
     }#End foreach Package
     
 }#End foreach DistributionPoint
+
+#If no content is found, write success and exit script.
 if(!$resultsArray){
 Write-Host -ForegroundColor Green "Congratulations, no content has failed or is in progress!"
 break
@@ -101,7 +103,7 @@ break
 
 #Pipe to Grid View and Selecting a row and pressing OK will redistribute it.
 $resultsArray | Sort-Object PackageID | Out-GridView -Title "Select package(s) to redistribute" -OutputMode Multiple |
-                 ForEach-Object {
+                ForEach-Object {
                     Get-WmiObject -Namespace root\sms\site_$SiteCode -ComputerName $CMServerName -Query "SELECT * FROM SMS_DistributionPoint WHERE PackageID='$($_.PackageID)' and ServerNALPath like '%$($_.'Distribution Point')%'" |
                         ForEach-Object {
 							#Redistribute Content
