@@ -15,7 +15,7 @@ if($Websites){
         $LogPath = "$($Website.logFile.directory)\W3SVC$($website.id)".replace("%SystemDrive%",$env:SystemDrive)
       
         #Generate list of old logs
-        $logsToDelete = Get-ChildItem $LogPath -Recurse -File *.log | Where LastWriteTime -lt ((Get-Date).AddDays($maxDaystoKeep)) 
+        $logsToDelete = Get-ChildItem $LogPath -Recurse *.log | where {$_.LastWriteTime -lt ((Get-Date).AddDays($maxDaystoKeep))}
     
         #Delete list of old logs
         if ($logsToDelete.Count -gt 0){ 
@@ -26,7 +26,7 @@ if($Websites){
     } 
 }else {
     #No websites found, check default dir anyway and clear out if needed.
-    $logsToDelete = Get-ChildItem "C:\inetpub\logs\LogFiles\" -Recurse -File *.log | Where LastWriteTime -lt ((Get-Date).AddDays($maxDaystoKeep)) 
+    $logsToDelete = Get-ChildItem "C:\inetpub\logs\LogFiles\" -Recurse *.log | where {$_.LastWriteTime -lt ((Get-Date).AddDays($maxDaystoKeep))}
   
     if ($logsToDelete.Count -gt 0){ 
         ForEach ($log in $logsToDelete){ 
