@@ -1,3 +1,13 @@
+#Find users that have not set their password since $searchDate
+
+$searchDate = "2021-11-07" #yyyy-MM-dd format  
+$passwordsNotChangedSince = $([datetime]::parseexact($searchDate,'yyyy-MM-dd',$null)).ToFileTime() 
+  
+$users = Get-ADUser -filter { Enabled -eq $True -and PasswordNeverExpires -eq $False} –Properties pwdLastSet | where { $_.pwdLastSet -lt $passwordsNotChangedSince -and $_.pwdLastSet -ne 0 } | Select-Object name,sAmAccountName,@{Name="PasswordLastSet";Expression={[datetime]::FromFileTimeUTC($_.pwdLastSet)}} 
+
+
+
+
 #########################
 #		Exchange		#
 #########################
