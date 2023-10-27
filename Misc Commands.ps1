@@ -77,6 +77,7 @@ foreach($server in $servers){
 "Needs upgrade: $($needsUpgrade)"
 
 #Run a compliance search action a gazillion times
+Connect-IPPSSession
 $searchName = "Search name goes here"
 $searchNamePurge = "$searchName" + "_Purge"
 $action = {
