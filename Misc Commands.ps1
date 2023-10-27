@@ -100,6 +100,15 @@ for ($i = 1; $i -le 400; $i++) {
     }
 }
 
+#Adds Tls1.2 to Windows
+#https://stackoverflow.com/questions/28286086/default-securityprotocol-in-net-4-5
+[Net.ServicePointManager]::SecurityProtocol = ([Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12)
+
+#Send an email with SSL.
+Send-MailMessage -from "sender@contoso.local" -To "recipient@contoso.local" -Subject "From Subject" -Body "Test Email" -UseSsl -SmtpServer email.contoso.local -Port 587 -Credential $creds
+
+
+
 
 #########################
 #		SharePoint		#
