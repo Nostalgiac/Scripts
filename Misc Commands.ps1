@@ -23,6 +23,18 @@ foreach($computer in $csv){
     Get-ADObject $computer.distinguishedName | Move-ADObject -TargetPath "OU=Retired,DC=contoso,DC=local"
 }
 
+#Remove all group memberships from a set of users
+$users = Get-ADuser -filter {samAccountName -like 'admin*'} -SearchBase "OU=Disabled Accounts,DC=contoso,DC=local" -Properties memberOf
+
+foreach($user in $users){
+    $groups = $user.Memberof
+    foreach ($group in $groups) {
+        Remove-ADGroupMember -Identity $group -Members $user -Confirm:$false -WhatIf
+        Write-Host "Removed user $user.Name from group $group."
+    }
+}
+
+
 
 #########################
 #		Exchange		#
